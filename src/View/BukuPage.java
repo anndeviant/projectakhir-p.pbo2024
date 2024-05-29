@@ -72,6 +72,7 @@ public class BukuPage extends javax.swing.JFrame {
         btnTambahBuku = new javax.swing.JButton();
         btnUpdateBuku = new javax.swing.JButton();
         btnDeleteBuku = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
 
@@ -297,6 +298,9 @@ public class BukuPage extends javax.swing.JFrame {
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel10.setText("Daftar Buku Perpustakaan Neural Book");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -314,7 +318,8 @@ public class BukuPage extends javax.swing.JFrame {
                         .addComponent(searchBy, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCariBuku)
-                        .addGap(0, 303, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel10))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -355,7 +360,8 @@ public class BukuPage extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(CariBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCariBuku))
+                    .addComponent(btnCariBuku)
+                    .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -559,6 +565,7 @@ public class BukuPage extends javax.swing.JFrame {
     private javax.swing.JButton btnTambahBuku;
     private javax.swing.JButton btnUpdateBuku;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

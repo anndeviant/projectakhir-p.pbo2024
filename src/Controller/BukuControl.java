@@ -10,6 +10,7 @@ import DAOImplement.BukuImplement;
 import View.*;
 import java.util.List;
 import Model.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,54 +18,90 @@ import Model.*;
  */
 public class BukuControl {
 
-    BukuPage frame;
-    BukuImplement impldatabuku;
-    List<Buku> db;
+    private final BukuPage frame;
+    private final BukuImplement implDataBuku;
 
     public BukuControl(BukuPage frame) {
         this.frame = frame;
-        impldatabuku = new BukuDAO();
-        db = impldatabuku.getAll();
+        implDataBuku = new BukuDAO();
     }
 
     public void isitabel() {
-        db = impldatabuku.getAll();
+        List<Buku> db = implDataBuku.getAll();
         ModelTabelBuku mb = new ModelTabelBuku(db);
         frame.getTabelDataBuku().setModel(mb);
     }
 
     public void insert() {
-        Buku db = new Buku();
-        db.setJudul(frame.getInputJudul().getText());
-        db.setPenulis(frame.getInputPenulis().getText());
-        db.setPenerbit(frame.getInputPenerbit().getText());
-        db.setGenre(frame.getInputGenre().getText());
-        db.setIsbn(frame.getInputISBN().getText());
-        impldatabuku.insert(db);
+        if (areInputsValid()) {
+            Buku buku = new Buku();
+            buku.setJudul(frame.getInputJudul().getText());
+            buku.setPenulis(frame.getInputPenulis().getText());
+            buku.setPenerbit(frame.getInputPenerbit().getText());
+            buku.setGenre(frame.getInputGenre().getText());
+            buku.setIsbn(frame.getInputISBN().getText());
+            implDataBuku.insert(buku);
+            JOptionPane.showMessageDialog(null, "Data berhasil disimpan!", "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Mohon lengkapi semua input!", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void update() {
-        Buku db = new Buku();
-        db.setJudul(frame.getInputJudul().getText());
-        db.setPenulis(frame.getInputPenulis().getText());
-        db.setPenerbit(frame.getInputPenerbit().getText());
-        db.setGenre(frame.getInputGenre().getText());
-        db.setIsbn(frame.getInputISBN().getText());
-        db.setId(Integer.parseInt(frame.getInputKode().getText()));
-        impldatabuku.update(db);
+        if (areInputsValid()) {
+            Buku buku = new Buku();
+            buku.setJudul(frame.getInputJudul().getText());
+            buku.setPenulis(frame.getInputPenulis().getText());
+            buku.setPenerbit(frame.getInputPenerbit().getText());
+            buku.setGenre(frame.getInputGenre().getText());
+            buku.setIsbn(frame.getInputISBN().getText());
+            buku.setId(Integer.parseInt(frame.getInputKode().getText()));
+            implDataBuku.update(buku);
+            JOptionPane.showMessageDialog(null, "Data berhasil diubah!", "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Mohon lengkapi semua input!", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void delete() {
-        int id = Integer.parseInt(frame.getInputKode().getText());
-        impldatabuku.delete(id);
+        if (!frame.getInputKode().getText().isEmpty()) {
+            try {
+                int id = Integer.parseInt(frame.getInputKode().getText());
+                implDataBuku.delete(id);
+                JOptionPane.showMessageDialog(null, "Data berhasil dihapus!", "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "ID harus berupa angka!", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Click Data Pada Tabel yang Mau Dihapus!", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void search() {
-        String by = frame.getSearchBy().getSelectedItem().toString();
-        by = by.toLowerCase();
+        String by = frame.getSearchBy().getSelectedItem().toString().toLowerCase();
         String text = frame.getCariBuku().getText();
-        db = impldatabuku.search(by, text);
-        ModelTabelBuku mb = new ModelTabelBuku(db);
-        frame.getTabelDataBuku().setModel(mb);
+        if (!text.isEmpty() && !by.isEmpty()) {
+            List<Buku> db = implDataBuku.search(by, text);
+            ModelTabelBuku mb = new ModelTabelBuku(db);
+            frame.getTabelDataBuku().setModel(mb);
+        } else {
+            JOptionPane.showMessageDialog(null, "Masukkan teks untuk pencarian!", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private boolean areInputsValid() {
+        return !frame.getInputJudul().getText().isEmpty()
+                && !frame.getInputPenulis().getText().isEmpty()
+                && !frame.getInputPenerbit().getText().isEmpty()
+                && !frame.getInputGenre().getText().isEmpty()
+                && !frame.getInputISBN().getText().isEmpty();
     }
 }

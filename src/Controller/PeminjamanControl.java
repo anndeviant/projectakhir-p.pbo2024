@@ -5,28 +5,27 @@
  */
 package Controller;
 
-import DAOData.BukuDAO;
 import DAOData.PeminjamanDAO;
-import DAOImplement.BukuImplement;
 import DAOImplement.PeminjamanImplement;
 import Model.Buku;
 import Model.ModelTabelBuku;
 import Model.ModelTabelPeminjaman;
 import Model.Peminjaman;
-import View.BukuPage;
 import View.PeminjamanPage;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author L E N O V O
  */
+
 public class PeminjamanControl {
 
-    PeminjamanPage frame;
-    PeminjamanImplement implPeminjaman;
-    List<Buku> lb;
-    List<Peminjaman> lp;
+    private final PeminjamanPage frame;
+    private final PeminjamanImplement implPeminjaman;
+    private List<Buku> lb;
+    private List<Peminjaman> lp;
 
     public PeminjamanControl(PeminjamanPage frame) {
         this.frame = frame;
@@ -45,8 +44,7 @@ public class PeminjamanControl {
     }
 
     public void search() {
-        String by = frame.getSearchBy().getSelectedItem().toString();
-        by = by.toLowerCase();
+        String by = frame.getSearchBy().getSelectedItem().toString().toLowerCase();
         String text = frame.getCariBuku().getText();
         lb = implPeminjaman.search(by, text);
         ModelTabelBuku mb = new ModelTabelBuku(lb);
@@ -54,9 +52,25 @@ public class PeminjamanControl {
     }
 
     public void insert() {
-        Peminjaman dp = new Peminjaman();
-        dp.setKode_buku(Integer.parseInt(frame.getInputKode().getText()));
-        dp.setNama_mhs(frame.getInputNama().getText());
-        implPeminjaman.insert(dp);
+        if (isInputValid()) {
+            try {
+                Peminjaman peminjaman = new Peminjaman();
+                peminjaman.setKode_buku(Integer.parseInt(frame.getInputKode().getText()));
+                peminjaman.setNama_mhs(frame.getInputNama().getText());
+                implPeminjaman.insert(peminjaman);
+                JOptionPane.showMessageDialog(null, "Peminjaman berhasil ditambahkan!", "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Kode buku harus berupa angka!", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Mohon lengkapi semua input!", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private boolean isInputValid() {
+        return !frame.getInputKode().getText().isEmpty() && !frame.getInputNama().getText().isEmpty();
     }
 }

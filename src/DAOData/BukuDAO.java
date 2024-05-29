@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -154,8 +155,6 @@ public class BukuDAO implements BukuImplement {
         return db;
     }
 
-    ;
-   
     @Override
     public List<Buku> search(String by, String text) {
         String search = "SELECT * FROM buku WHERE " + by + " LIKE ?";
